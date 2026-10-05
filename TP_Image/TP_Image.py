@@ -28,6 +28,14 @@ def negatif(im):
                 t[i,j,k] = 255 - t[i,j,k]
     return Image.fromarray(t)
 
+def cadre(im, ep):
+    t=np.array(im)
+    h, l, r=t.shape
+    new = np.zeros((h + 2 * ep, l + 2 * ep, 3), dtype=np.uint8)
+    for i in range(h):
+        for j in range(l):
+            new[i + ep, j + ep] = t[i, j]
+    return Image.fromarray(new)
 
 """alls"""
 
@@ -45,3 +53,8 @@ cocci=Image.open("499p.jpg")
 cocci_neg=negatif(cocci)
 cocci_neg.save("cocci_neg.jpg")
 cocci_neg.show()
+
+cocci=Image.open("499p.jpg")
+cocci_cadre=cadre(cocci, 5)
+cocci_cadre.save("cocci_cadre.jpg")
+cocci_cadre.show()
