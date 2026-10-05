@@ -52,8 +52,8 @@ def niveau_gris(im):
     new = np.zeros((h, l, 3), dtype="uint8")
     for i in range(h):
         for j in range(l):
-            R, V, B = int(t[i][j][0]), int(t[i][j][1]), int(t[i][j][2])  # int: évite le dépassement uint8
-            g = int(0.299 * R + 0.587 * V + 0.114 * B)  # partie entière
+            R, V, B = int(t[i][j][0]), int(t[i][j][1]), int(t[i][j][2])
+            g = int(0.299 * R + 0.587 * V + 0.114 * B)
             new[i][j] = [g, g, g]
     return Image.fromarray(new)
 
@@ -67,32 +67,36 @@ def niveau_gris2(im):
             tabng[i][j] = int(0.299 * R + 0.587 * V + 0.114 * B)
     return Image.fromarray(tabng)
 
+def pixel(im):
+    t=np.array(im)
+    h, l, r=t.shape
+
 """alls"""
 
 cocci=Image.open("499p.jpg")
 cocci_noire=image_noire(cocci)
 cocci_noire.save("cocci_noire.jpg")
-cocci_noire.show()
+#cocci_noire.show()
 
 cocci=Image.open("499p.jpg")
 cocci_red=composante_rouge(cocci)
 cocci_red.save("cocci_red.jpg")
-cocci_red.show()
+#cocci_red.show()
 
 cocci=Image.open("499p.jpg")
 cocci_neg=negatif(cocci)
 cocci_neg.save("cocci_neg.jpg")
-cocci_neg.show()
+#cocci_neg.show()
 
 cocci=Image.open("499p.jpg")
 cocci_cadre=cadre_noir(cocci, 50)
 cocci_cadre.save("cocci_cadre.jpg")
-cocci_cadre.show()
+#cocci_cadre.show()
 
 cocci=Image.open("499p.jpg")
 cocci_rajout=rajout_cadre(cocci, 50)
 cocci_rajout.save("cocci_rajout.jpg")
-cocci_rajout.show()
+#cocci_rajout.show()
 
 cocci=Image.open("499p.jpg")
 cocci_ng=niveau_gris(cocci)
