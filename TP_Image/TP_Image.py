@@ -46,6 +46,17 @@ def rajout_cadre(im, ep):
             new[i + ep][j + ep] = t[i][j]
     return Image.fromarray(new)
 
+def niveau_gris(im):
+    t = np.array(im)
+    h, l, r = t.shape
+    new = np.zeros((h, l, 3), dtype="uint8")
+    for i in range(h):
+        for j in range(l):
+            R, V, B = int(t[i][j][0]), int(t[i][j][1]), int(t[i][j][2])  # int: évite le dépassement uint8
+            g = int(0.299 * R + 0.587 * V + 0.114 * B)  # partie entière
+            new[i][j] = [g, g, g]
+    return Image.fromarray(new)
+
 def niveau_gris2(im):
     t = np.array(im)
     h, l, r = t.shape
@@ -82,6 +93,11 @@ cocci=Image.open("499p.jpg")
 cocci_rajout=rajout_cadre(cocci, 50)
 cocci_rajout.save("cocci_rajout.jpg")
 cocci_rajout.show()
+
+cocci=Image.open("499p.jpg")
+cocci_ng=niveau_gris(cocci)
+cocci_ng.save("cocci_gris.jpg")
+cocci_ng.show()
 
 cocci=Image.open("499p.jpg")
 cocci_ng=niveau_gris2(cocci)
