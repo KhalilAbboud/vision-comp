@@ -51,12 +51,27 @@ G_claire = np.clip(G.astype(np.int16) + 40, 0, 255).astype(np.uint8)
 fig, axes = plt.subplots(2, 2, figsize=(12, 8))
 axes[0, 0].imshow(G, cmap='gray', vmin=0, vmax=255)
 axes[0, 1].imshow(G_claire, cmap='gray', vmin=0, vmax=255)
-axes[1, 0].hist(G.ravel(), bins=256, range=(0, 256))
-axes[1, 1].hist(G_claire.ravel(), bins=256, range=(0, 256))
+axes[0, 0].set_title('Original')
+axes[0, 1].set_title('Brighter +40')
+
+hist1 = axes[1, 0].hist(G.ravel(), bins=256, range=(0, 256), color='gray')
+axes[1, 0].set_title('Histogramme original')
+axes[1, 0].set_xlabel('Intensité')
+axes[1, 0].set_ylabel('Nombre de pixels')
+axes[1, 0].set_xlim(0, 255)
+axes[1, 0].set_xticks([0, 64, 128, 192, 255])
+
+hist2 = axes[1, 1].hist(G_claire.ravel(), bins=256, range=(0, 256), color='gray')
+axes[1, 1].set_title('Histogramme +40')
+axes[1, 1].set_xlabel('Intensité')
+axes[1, 1].set_ylabel('Nombre de pixels')
+axes[1, 1].set_xlim(0, 255)
+axes[1, 1].set_xticks([0, 64, 128, 192, 255])
 
 for ax in axes.flat:
-    ax.set_xticks([])
     ax.set_yticks([])
+    if ax in [axes[1, 0], axes[1, 1]]:
+        ax.set_yticks([])
 
 plt.tight_layout()
 plt.savefig(os.path.join(OUTPUT_DIR, 'brightness.png'), dpi=150)
