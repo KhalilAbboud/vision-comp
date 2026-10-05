@@ -1,8 +1,14 @@
+import os
+
 from PIL import Image
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
+
+OUTPUT_DIR = 'plots'
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
 def quantifier(img, n_levels):
@@ -35,7 +41,9 @@ for a, im, t in zip(ax, [G, G16, G4], ['256 niveaux', '16 niveaux', '4 niveaux']
     a.axis('off')
 
 plt.tight_layout()
-plt.show()
+plt.savefig(os.path.join(OUTPUT_DIR, 'quantization.png'), dpi=150)
+plt.close()
+print('Saved:', os.path.join(OUTPUT_DIR, 'quantization.png'))
 
 # Part 3 - Brightness and histograms
 G_claire = np.clip(G.astype(np.int16) + 40, 0, 255).astype(np.uint8)
@@ -51,7 +59,9 @@ for ax in axes.flat:
     ax.set_yticks([])
 
 plt.tight_layout()
-plt.show()
+plt.savefig(os.path.join(OUTPUT_DIR, 'brightness.png'), dpi=150)
+plt.close()
+print('Saved:', os.path.join(OUTPUT_DIR, 'brightness.png'))
 
 # Part 5 - Spatial organization
 # B: two blocks
@@ -73,7 +83,9 @@ for ax in axes.flat:
     ax.set_yticks([])
 
 plt.tight_layout()
-plt.show()
+plt.savefig(os.path.join(OUTPUT_DIR, 'spatial.png'), dpi=150)
+plt.close()
+print('Saved:', os.path.join(OUTPUT_DIR, 'spatial.png'))
 
 print('Image mean:', G.mean())
 print('Brighter image mean:', G_claire.mean())
