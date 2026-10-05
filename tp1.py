@@ -140,7 +140,7 @@ for y in range(A.shape[0]):
     for x in range(A.shape[1] - 1):
         i = A[y, x]
         j = A[y, x + 1]
-        C[i, j] += 1          # <- the missing line
+        C[i, j] += 1          
 P = C / C.sum()
 print(C, P.sum())
 
