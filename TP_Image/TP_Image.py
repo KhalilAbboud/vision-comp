@@ -28,14 +28,25 @@ def negatif(im):
                 t[i,j,k] = 255 - t[i,j,k]
     return Image.fromarray(t)
 
-def cadre(im, ep):
-    t=np.array(im)
-    h, l, r=t.shape
-    new = np.zeros((h + 2 * ep, l + 2 * ep, 3), dtype=np.uint8)
+def cadre_noir(im, ep):
+    t = np.array(im)
+    h, l, r = t.shape
     for i in range(h):
         for j in range(l):
-            new[i + ep, j + ep] = t[i, j]
+            if i < ep or i >= h - ep or j < ep or j >= l - ep:
+                t[i][j] = [0, 0, 0]
+    return Image.fromarray(t)
+
+def rajout_cadre(im, ep):
+    t = np.array(im)
+    h, l, r = t.shape
+    new = np.zeros((h + 2 * ep, l + 2 * ep, 3), dtype="uint8")
+    for i in range(h):
+        for j in range(l):
+            new[i + ep][j + ep] = t[i][j]
     return Image.fromarray(new)
+
+
 
 """alls"""
 
@@ -55,6 +66,11 @@ cocci_neg.save("cocci_neg.jpg")
 cocci_neg.show()
 
 cocci=Image.open("499p.jpg")
-cocci_cadre=cadre(cocci, 5)
+cocci_cadre=cadre_noir(cocci, 50)
 cocci_cadre.save("cocci_cadre.jpg")
 cocci_cadre.show()
+
+cocci=Image.open("499p.jpg")
+cocci_rajout=rajout_cadre(cocci, 50)
+cocci_rajout.save("cocci_rajout.jpg")
+cocci_rajout.show()
